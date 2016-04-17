@@ -56,7 +56,7 @@ public class AppTest {
 
         try {
             writer = new PrintWriter("result-5000.csv", "UTF-8");
-            writer.println("length(LaIS), Time in millis");
+            writer.println("length(LaIS), Time in nanos");
 
             for (int j = 0; j < times; ++j) {
                 dataTyped = new ArrayList<>(length);
@@ -115,7 +115,7 @@ public class AppTest {
 
 
             writer = new PrintWriter("result-5000-avg-std.csv", "UTF-8");
-            writer.println("length(LaIS), Time in millis, STD");
+            writer.println("length(LaIS), Time in nanos, STD");
 
             for (int kEl : avg.keySet()){
                 writer.println("" + kEl + ", " + avg.get(kEl)+ ", " + std.get(kEl));
