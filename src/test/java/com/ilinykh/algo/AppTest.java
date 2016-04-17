@@ -9,9 +9,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.TreeMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AppTest {
 
@@ -30,41 +30,29 @@ public class AppTest {
     }
 
 
-
     @Test
     public void checkComplexity() {
-        long c = 2;
+        long c = 10;
         int length = 1000;
         int times = 5000;
+        int bound = 1000;
+
         List<Long> dataTyped;
-        long start, fin, delta;
-        int l;
+        long start, fin;
         long[] laIS;
         Random generator = new Random();
         PrintWriter writer;
-
-        int[] k = new int[times];
-        long[] time = new long[times];
-
-
-        TreeMap<Integer, Long> avg = new TreeMap<>();
-        TreeMap<Integer, Long> cnt = new TreeMap<>();
-        TreeMap<Integer, Double> std = new TreeMap<>();
-
-
-
 
         try {
             writer = new PrintWriter("result-5000.csv", "UTF-8");
             writer.println("length(LaIS), Time in nanos");
 
             for (int j = 0; j < times; ++j) {
+
                 dataTyped = new ArrayList<>(length);
-
                 for (int i = 0; i < length; ++i) {
-                    dataTyped.add((long) generator.nextInt(1000));
+                    dataTyped.add((long) generator.nextInt(bound));
                 }
-
                 DataProcessor dataProcessor = new DataProcessor(dataTyped, c);
 
                 start = System.nanoTime();
@@ -73,55 +61,8 @@ public class AppTest {
 
                 assertTrue(validateLais(laIS, c));
 
-
-
-
-                delta = fin - start;
-                l = laIS.length;
-
-                k[j] = l;
-                time[j] = delta;
-
-                Long cntEl = cnt.get(l);
-                if (cntEl == null){
-                    cnt.put(l, 1L);
-                    avg.put(l, delta);
-                } else {
-                    cnt.put(l, cntEl + 1);
-                    avg.put(l, (avg.get(l) * cntEl + delta) / (cntEl + 1));
-                }
-                writer.println("" + l + ", " + delta);
+                writer.println("" + laIS.length + ", " + (fin - start));
             }
-
-            writer.close();
-
-            TreeMap<Integer, Long> d2Map = new TreeMap<>();
-
-            for (int j = 0; j < times; ++j) {
-                int kEl = k[j];
-                long d = avg.get(kEl) - kEl;
-                Long d2Val = d2Map.get(kEl);
-                if (d2Val == null){
-                    d2Map.put(kEl, d*d);
-                } else {
-                    d2Map.put(kEl, d2Val + d*d);
-                }
-            }
-
-            for (int kEl: avg.keySet()){
-                std.put(kEl, Math.sqrt(d2Map.get(kEl) / avg.get(kEl)));
-            }
-
-
-
-            writer = new PrintWriter("result-5000-avg-std.csv", "UTF-8");
-            writer.println("length(LaIS), Time in nanos, STD");
-
-            for (int kEl : avg.keySet()){
-                writer.println("" + kEl + ", " + avg.get(kEl)+ ", " + std.get(kEl));
-            }
-
-
 
             writer.close();
 
@@ -134,12 +75,12 @@ public class AppTest {
 
     }
 
-    public boolean validateLais(long[] laIS, long c){
+    public boolean validateLais(long[] laIS, long c) {
         int l = laIS.length;
         long max = laIS[0];
         long el;
 
-        for (int i = 1; i < l; ++i){
+        for (int i = 1; i < l; ++i) {
             el = laIS[i];
 
             if (el <= max - c)
