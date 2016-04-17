@@ -11,10 +11,11 @@ public class App {
 
         System.out.println("Longest Almost-Increasing Subsequenc.");
 
-        if (args.length < 1)
-            throw new RuntimeException("Unknown data file name.");
+        if (args.length < 2)
+            throw new RuntimeException("Unknown data file name and C - constant.");
 
         File file = new File(args[0]);
+
 
         System.out.println("Source data file: " + file);
 
@@ -32,8 +33,8 @@ public class App {
             e.printStackTrace();
         }
 
-
-        List<Long> laIS = new DataProcessor(sourceData).getLaIS();
+        long c = Long.parseLong(args[1]);
+        List<Long> laIS = new DataProcessor(sourceData).getLaIS(c);
 
         laIS.iterator().forEachRemaining(System.out::println);
 
