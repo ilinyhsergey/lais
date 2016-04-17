@@ -10,7 +10,7 @@ public class DataProcessor {
     /**
      * Resulted Longest Almost-Increasing Subsequence.
      */
-    LinkedList<Long> lais;
+    long[] lais;
 
     // We have to store multiple indexes for one 'x' value.
     private TreeMap<Long, Stack<Integer>> z;
@@ -44,10 +44,9 @@ public class DataProcessor {
 
         z = new TreeMap<>(comparator);
         p = new ArrayList<>(data.size());
-        lais = new LinkedList<>();
     }
 
-    public List<Long> getLaIS(long c) {
+    public long[] getLaIS(long c) {
         int n = data.size();
 
         for (int i = 0; i < n; ++i) {
@@ -78,16 +77,60 @@ public class DataProcessor {
                     stack1.pop();
             }
 
-            System.out.println("\n>>> i=" + i);
-            showMeZ(z);
+//            System.out.println("\n>>> i=" + i);
+//            showMeZ(z);
         }
-        // todo
-
 
         showMeZ(z);
         showMeP(p);
 
+
+        // count length(LaIS)
+        int l = countLaisLength(z);
+        System.out.println("> length(LaIS) = " + l);
+
+        // m <- tail_node().index
+        int m = z.lastEntry().getValue().get(0);
+        long xm = data.get(m);
+        System.out.println("> m=" + m + "    x[m]=" + xm);
+
+        lais = new long[l];
+        // A position in LaIS to put element in it.
+        int positionInLais = l;
+
+        for (int i = n - 1; i > m; --i) {
+            long xi = data.get(i);
+            if (xm - c < xi && xi <= xm) {
+                lais[--positionInLais] = xi;
+            }
+        }
+
+        lais[--positionInLais] = xm;
+
+        int t = m;
+        int pt = p.get(t);
+        while (t != pt) {
+            long xpt = data.get(pt);
+            for (int i = t - 1; i > pt; --i) {
+                long xi = data.get(i);
+                if (xpt - c < xi && xi <= xpt) {
+                    lais[--positionInLais] = xi;
+                }
+            }
+            lais[--positionInLais] = xpt;
+            t = pt;
+            pt = p.get(t);
+        }
+
         return lais;
+    }
+
+    private int countLaisLength(TreeMap<Long, Stack<Integer>> z) {
+        int l = 0;
+        for (Map.Entry<Long, Stack<Integer>> zi : z.entrySet()) {
+            l += zi.getValue().size();
+        }
+        return l;
     }
 
     private void showMeZ(TreeMap<Long, Stack<Integer>> z) {

@@ -3,7 +3,6 @@ package com.ilinykh.algo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -34,9 +33,15 @@ public class App {
         }
 
         long c = Long.parseLong(args[1]);
-        List<Long> laIS = new DataProcessor(sourceData).getLaIS(c);
+        long[] laIS = new DataProcessor(sourceData).getLaIS(c);
 
-        laIS.iterator().forEachRemaining(System.out::println);
+        System.out.println("____ LaIS: ____");
+        for (long e : laIS) {
+            System.out.println(e);
+        }
+
+
+//        laIS.iterator().forEachRemaining(System.out::println);
 
     }
 
