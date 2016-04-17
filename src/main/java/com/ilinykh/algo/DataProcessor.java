@@ -38,15 +38,17 @@ public class DataProcessor {
     };
 
     private List<Long> data;
+    private long c;
 
-    public DataProcessor(List<Long> data) {
+    public DataProcessor(List<Long> data, long c) {
         this.data = data;
+        this.c = c;
 
         z = new TreeMap<>(comparator);
         p = new ArrayList<>(data.size());
     }
 
-    public long[] getLaIS(long c) {
+    public long[] getLaIS() {
         int n = data.size();
 
         for (int i = 0; i < n; ++i) {

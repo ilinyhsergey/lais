@@ -24,7 +24,7 @@ public class AppTest {
         for (int i = 0; i < length; ++i) {
             dataTyped.add(data[i]);
         }
-        long[] laIS = new DataProcessor(dataTyped).getLaIS(c);
+        long[] laIS = new DataProcessor(dataTyped, c).getLaIS();
         assertArrayEquals(laIS, new long[]{2, 6, 8, 11, 14, 13});
         assertTrue(validateLais(laIS, c));
     }
@@ -65,10 +65,10 @@ public class AppTest {
                     dataTyped.add((long) generator.nextInt(1000));
                 }
 
-                DataProcessor dataProcessor = new DataProcessor(dataTyped);
+                DataProcessor dataProcessor = new DataProcessor(dataTyped, c);
 
                 start = System.nanoTime();
-                laIS = dataProcessor.getLaIS(c);
+                laIS = dataProcessor.getLaIS();
                 fin = System.nanoTime();
 
                 assertTrue(validateLais(laIS, c));

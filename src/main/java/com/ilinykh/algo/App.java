@@ -33,7 +33,7 @@ public class App {
         }
 
         long c = Long.parseLong(args[1]);
-        long[] laIS = new DataProcessor(sourceData).getLaIS(c);
+        long[] laIS = new DataProcessor(sourceData, c).getLaIS();
 
         System.out.println("____ LaIS: ____");
         for (long e : laIS) {
