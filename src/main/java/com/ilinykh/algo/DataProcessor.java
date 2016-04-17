@@ -1,14 +1,25 @@
 package com.ilinykh.algo;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * Longest Almost-Increasing Subsequenc
+ */
 public class DataProcessor {
 
-    private File file;
+    /**
+     * Resulted Longest Almost-Increasing Subsequence.
+     */
+    LinkedList<Long> lais;
+
+    private TreeMap<Long, Integer> z;
+
+    /**
+     * When we add a new element 'x' in 'z' tree we store (in 'p' list)
+     * index (the index in the original data) of an element that precedes
+     * the element (that we add).
+     */
     private List<Long> p;
-    private TreeMap<Long, Node> z;
 
     private Comparator<Long> comparator = new Comparator<Long>() {
         @Override
@@ -25,49 +36,21 @@ public class DataProcessor {
         }
     };
 
-    public DataProcessor(File file) {
-        this.file = file;
-        p = new LinkedList<Long>();
-        z = new TreeMap<Long, Node>(comparator);
+    private List<Long> sourceData;
+
+    public DataProcessor(List<Long> sourceData) {
+        this.sourceData = sourceData;
+
+        z = new TreeMap<>(comparator);
+        p = new LinkedList<>();
+        lais = new LinkedList<>();
     }
 
     public List<Long> getLaIS() {
-        LinkedList<Long> lais = new LinkedList<>();
 
-        try {
-            Scanner scanner = new Scanner(file);
 
-            long i = 0;// All indexes start from 0.
-            while (scanner.hasNextLong()) {
-                long x = scanner.nextLong();
-
-                System.out.println(x);// todo
-
-                processElement(x, i++);
-
-            }
-
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        // todo
         return lais;
     }
 
-
-    private void processElement(long x, long i) {
-
-    }
-
-
-    public static class Node {
-        final long value;
-        final long index;
-
-        public Node(long value, long index) {
-            this.value = value;
-            this.index = index;
-        }
-    }
 }
