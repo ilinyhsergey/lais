@@ -45,7 +45,7 @@ public class AppTest {
 
         try {
             writer = new PrintWriter("result-5000.csv", "UTF-8");
-            writer.println("length(LaIS), Time in nanos");
+            writer.println("length(LaIS),Time in nanos");
 
             for (int j = 0; j < times; ++j) {
 
@@ -61,7 +61,7 @@ public class AppTest {
 
                 assertTrue(validateLais(laIS, c));
 
-                writer.println("" + laIS.length + ", " + (fin - start));
+                writer.println("" + laIS.length + "," + (fin - start));
             }
 
             writer.close();
