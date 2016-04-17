@@ -81,18 +81,18 @@ public class DataProcessor {
 //            showMeZ(z);
         }
 
-        showMeZ(z);
-        showMeP(p);
+//        showMeZ(z);
+//        showMeP(p);
 
 
         // count length(LaIS)
         int l = countLaisLength(z);
-        System.out.println("> length(LaIS) = " + l);
+//        System.out.println("> length(LaIS) = " + l);
 
         // m <- tail_node().index
         int m = z.lastEntry().getValue().get(0);
         long xm = data.get(m);
-        System.out.println("> m=" + m + "    x[m]=" + xm);
+//        System.out.println("> m=" + m + "    x[m]=" + xm);
 
         lais = new long[l];
         // A position in LaIS to put element in it.
