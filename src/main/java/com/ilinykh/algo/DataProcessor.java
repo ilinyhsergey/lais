@@ -12,7 +12,8 @@ public class DataProcessor {
      */
     LinkedList<Long> lais;
 
-    private TreeMap<Long, Integer> z;
+    // We have to store multiple indexes for one 'x' value.
+    private TreeMap<Long, Stack<Integer>> z;
 
     /**
      * When we add a new element 'x' in 'z' tree we store (in 'p' list)
@@ -52,18 +53,29 @@ public class DataProcessor {
         for (int i = 0; i < n; ++i) {
             long xi = data.get(i);
 
-            Map.Entry<Long, Integer> pred = z.lowerEntry(xi);
-            if (pred != null) {
-                p.add(i, pred.getValue());// store index of predecessor of xi
-            } else {
+            Map.Entry<Long, Stack<Integer>> pred = z.lowerEntry(xi);
+            if (pred != null)
+                p.add(i, pred.getValue().get(0));// store index of predecessor of xi
+            else
                 p.add(i, i);
+
+            // insert()
+            // key: xi; value: i - index of xi;
+            Stack<Integer> stack = z.get(xi);
+            if (stack == null) {
+                stack = new Stack<>();
+                z.put(xi, stack);
             }
-            z.put(xi, i); // key: xi; value: i - index of xi;
+            stack.push(i);
 
-
-            Long s = z.ceilingKey(xi + c);
+            // delete()
+            Map.Entry<Long, Stack<Integer>> s = z.ceilingEntry(xi + c);
             if (s != null) {
-                z.remove(s);
+                Stack<Integer> stack1 = s.getValue();
+                if (stack1.size() < 2)
+                    z.remove(s.getKey());
+                else
+                    stack1.pop();
             }
 
             System.out.println("\n>>> i=" + i);
@@ -78,11 +90,23 @@ public class DataProcessor {
         return lais;
     }
 
-    private void showMeZ(TreeMap<Long, Integer> z) {
+    private void showMeZ(TreeMap<Long, Stack<Integer>> z) {
         System.out.println("____ z tree: ____");
-        for (Map.Entry<Long, Integer> zi : z.entrySet()) {
-            System.out.println(zi.getKey() + "\t| " + zi.getValue());
+        for (Map.Entry<Long, Stack<Integer>> zi : z.entrySet()) {
+            System.out.println(zi.getKey() + "\t| " + stackToString(zi.getValue()));
         }
+    }
+
+    private String stackToString(Stack<Integer> stack) {
+        int size = stack.size();
+        StringBuilder builder = new StringBuilder("[");
+        for (int j = 0; j < size; ++j) {
+            if (j > 0)
+                builder.append(", ");
+            builder.append(stack.get(j));
+        }
+        builder.append("]");
+        return builder.toString();
     }
 
     private void showMeP(List<Integer> p) {
