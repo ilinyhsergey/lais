@@ -26,6 +26,7 @@
  *  X 7
  *
  ******************************************************************************/
+package com.ilinykh.algo;
 
 import java.util.NoSuchElementException;
 
@@ -618,11 +619,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     *  Check integrity of red-black tree data structure.
     ***************************************************************************/
     private boolean check() {
-        if (!isBST())            StdOut.println("Not in symmetric order");
-        if (!isSizeConsistent()) StdOut.println("Subtree counts not consistent");
-        if (!isRankConsistent()) StdOut.println("Ranks not consistent");
-        if (!is23())             StdOut.println("Not a 2-3 tree");
-        if (!isBalanced())       StdOut.println("Not balanced");
+        if (!isBST())            System.out.println("Not in symmetric order");
+        if (!isSizeConsistent()) System.out.println("Subtree counts not consistent");
+        if (!isRankConsistent()) System.out.println("Ranks not consistent");
+        if (!is23())             System.out.println("Not a 2-3 tree");
+        if (!isBalanced())       System.out.println("Not balanced");
         return isBST() && isSizeConsistent() && isRankConsistent() && is23() && isBalanced();
     }
 
@@ -692,14 +693,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     /**
      * Unit tests the <tt>RedBlackBST</tt> data type.
      */
-    public static void main(String[] args) { 
-        RedBlackBST<String, Integer> st = new RedBlackBST<String, Integer>();
-        for (int i = 0; !StdIn.isEmpty(); i++) {
-            String key = StdIn.readString();
-            st.put(key, i);
-        }
-        for (String s : st.keys())
-            StdOut.println(s + " " + st.get(s));
-        StdOut.println();
-    }
+//    public static void main(String[] args) {
+//        RedBlackBST<String, Integer> st = new RedBlackBST<String, Integer>();
+//        for (int i = 0; !StdIn.isEmpty(); i++) {
+//            String key = StdIn.readString();
+//            st.put(key, i);
+//        }
+//        for (String s : st.keys())
+//            StdOut.println(s + " " + st.get(s));
+//        StdOut.println();
+//    }
 }
