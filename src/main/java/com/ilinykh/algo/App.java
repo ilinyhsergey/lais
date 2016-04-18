@@ -79,7 +79,7 @@ public class App {
         long[] lais;
 
         // We have to store multiple indexes for one 'x' value.
-        private TreeMap<Long, Stack<Integer>> z;
+        private RedBlackBST<Long, Stack<Integer>> z;
 
         /**
          * When we add a new element 'x' in 'z' tree we store (in 'p' list)
@@ -95,7 +95,7 @@ public class App {
             this.data = data;
             this.c = c;
 
-            z = new TreeMap<>();
+            z = new RedBlackBST<>();
             p = new ArrayList<>(data.size());
         }
 
@@ -105,9 +105,9 @@ public class App {
             for (int i = 0; i < n; ++i) {
                 long xi = data.get(i);
 
-                Map.Entry<Long, Stack<Integer>> pred = z.lowerEntry(xi);
+                RedBlackBST<Long, Stack<Integer>>.Node pred = z.lowerNode(xi);
                 if (pred != null)
-                    p.add(i, pred.getValue().get(0));// store index of predecessor of xi
+                    p.add(i, pred.getVal().get(0));// store index of predecessor of xi
                 else
                     p.add(i, i);
 
@@ -121,11 +121,11 @@ public class App {
                 stack.push(i);
 
                 // delete()
-                Map.Entry<Long, Stack<Integer>> s = z.ceilingEntry(xi + c);
+                RedBlackBST<Long, Stack<Integer>>.Node s = z.ceilingNode(xi + c);
                 if (s != null) {
-                    Stack<Integer> stack1 = s.getValue();
+                    Stack<Integer> stack1 = s.getVal();
                     if (stack1.size() < 2)
-                        z.remove(s.getKey());
+                        z.delete(s.getKey());
                     else
                         stack1.pop();
                 }
@@ -137,7 +137,7 @@ public class App {
             int l = countLaisLength(z);
 
             // m <- tail_node().index
-            int m = z.lastEntry().getValue().get(0);
+            int m = z.maxNode().getVal().get(0);
             long xm = data.get(m);
 
             lais = new long[l];
@@ -171,10 +171,10 @@ public class App {
             return lais;
         }
 
-        private int countLaisLength(TreeMap<Long, Stack<Integer>> z) {
+        private int countLaisLength(RedBlackBST<Long, Stack<Integer>> z) {
             int l = 0;
-            for (Map.Entry<Long, Stack<Integer>> zi : z.entrySet()) {
-                l += zi.getValue().size();
+            for (Long zi : z.keys()) {
+                l += z.get(zi).size();
             }
             return l;
         }

@@ -72,7 +72,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private Node root;     // root of the BST
 
     // BST helper node data type
-    private class Node {
+    public class Node {
         private Key key;           // key
         private Value val;         // associated data
         private Node left, right;  // links to left and right subtrees
@@ -84,6 +84,22 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             this.val = val;
             this.color = color;
             this.N = N;
+        }
+
+        public Value getVal() {
+            return val;
+        }
+
+        public void setVal(Value val) {
+            this.val = val;
+        }
+
+        public Key getKey() {
+            return key;
+        }
+
+        public void setKey(Key key) {
+            this.key = key;
         }
     }
 
@@ -447,9 +463,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * @throws NoSuchElementException if the symbol table is empty
      */
     public Key max() {
+        return maxNode().key;
+    }
+
+    public Node maxNode() {
         if (isEmpty()) throw new NoSuchElementException("called max() with empty symbol table");
-        return max(root).key;
-    } 
+        return max(root);
+    }
 
     // the largest key in the subtree rooted at x; null if no such key
     private Node max(Node x) { 
@@ -472,7 +492,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         Node x = floor(root, key);
         if (x == null) return null;
         else           return x.key;
-    }    
+    }
 
     // the largest key in the subtree rooted at x less than or equal to the given key
     private Node floor(Node x, Key key) {
@@ -486,6 +506,36 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     /**
+     * Returns the largest key in the symbol table strictly less than <tt>key</tt>.
+     * @param key the key
+     * @return the largest key in the symbol table strictly less than <tt>key</tt>
+     * @throws NoSuchElementException if there is no such key
+     * @throws NullPointerException if <tt>key</tt> is <tt>null</tt>
+     */
+    public Key lower(Key key) {
+        Node x = lowerNode(key);
+        if (x == null) return null;
+        else           return x.key;
+    }
+
+    public Node lowerNode(Key key) {
+        if (key == null) throw new NullPointerException("argument to lower() is null");
+        if (isEmpty()) return null;
+        return lower(root, key);
+    }
+
+    // the largest key in the subtree rooted at x less than the given key
+    private Node lower(Node x, Key key) {
+        if (x == null) return null;
+        int cmp = key.compareTo(x.key);
+//        if (cmp == 0) return x;
+        if (cmp <= 0)  return lower(x.left, key);
+        Node t = lower(x.right, key);
+        if (t != null) return t;
+        else           return x;
+    }
+
+    /**
      * Returns the smallest key in the symbol table greater than or equal to <tt>key</tt>.
      * @param key the key
      * @return the smallest key in the symbol table greater than or equal to <tt>key</tt>
@@ -493,11 +543,15 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * @throws NullPointerException if <tt>key</tt> is <tt>null</tt>
      */
     public Key ceiling(Key key) {
-        if (key == null) throw new NullPointerException("argument to ceiling() is null");
-        if (isEmpty()) throw new NoSuchElementException("called ceiling() with empty symbol table");
-        Node x = ceiling(root, key);
+        Node x = ceilingNode(key);
         if (x == null) return null;
         else           return x.key;  
+    }
+
+    public Node ceilingNode(Key key) {
+        if (key == null) throw new NullPointerException("argument to ceiling() is null");
+        if (isEmpty()) throw new NoSuchElementException("called ceiling() with empty symbol table");
+        return ceiling(root, key);
     }
 
     // the smallest key in the subtree rooted at x greater than or equal to the given key
