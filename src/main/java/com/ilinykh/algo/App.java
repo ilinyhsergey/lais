@@ -56,7 +56,7 @@ public class App {
             }
 
 
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder("{ k:" + laIS.length + ", n:" + sourceData.size() + ", cnt:" + Counter.get() + " } ");
             for (long element : laIS) {
                 builder.append(element).append(" ");
             }

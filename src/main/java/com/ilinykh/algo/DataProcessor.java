@@ -34,6 +34,9 @@ public class DataProcessor {
         int n = data.size();
 
         for (int i = 0; i < n; ++i) {
+
+            Counter.increment();
+
             long xi = data.get(i);
 
             RedBlackBST<Long, Stack<Integer>>.Node pred = z.lowerNode(xi);
@@ -76,6 +79,9 @@ public class DataProcessor {
         int positionInLais = l;
 
         for (int i = n - 1; i > m; --i) {
+
+            Counter.increment();
+
             long xi = data.get(i);
             if (xm - c < xi && xi <= xm) {
                 lais[--positionInLais] = xi;
@@ -87,8 +93,14 @@ public class DataProcessor {
         int t = m;
         int pt = p.get(t);
         while (t != pt) {
+
+            Counter.increment();
+
             long xpt = data.get(pt);
             for (int i = t - 1; i > pt; --i) {
+
+                Counter.increment();
+
                 long xi = data.get(i);
                 if (xpt - c < xi && xi <= xpt) {
                     lais[--positionInLais] = xi;
@@ -105,6 +117,9 @@ public class DataProcessor {
     private int countLaisLength(RedBlackBST<Long, Stack<Integer>> z) {
         int l = 0;
         for (Long zi : z.keys()) {
+
+            Counter.increment();
+
             l += z.get(zi).size();
         }
         return l;

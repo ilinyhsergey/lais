@@ -161,6 +161,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     // value associated with the given key in subtree rooted at x; null if no such key
     private Value get(Node x, Key key) {
         while (x != null) {
+
+            Counter.increment();
+
             int cmp = key.compareTo(x.key);
             if      (cmp < 0) x = x.left;
             else if (cmp > 0) x = x.right;
@@ -207,7 +210,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     // insert the key-value pair in the subtree rooted at h
-    private Node put(Node h, Key key, Value val) { 
+    private Node put(Node h, Key key, Value val) {
+
+        Counter.increment();
+
         if (h == null) return new Node(key, val, RED, 1);
 
         int cmp = key.compareTo(h.key);
@@ -312,6 +318,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     // delete the key-value pair with the given key rooted at h
     private Node delete(Node h, Key key) { 
         // assert get(h, key) != null;
+
+        Counter.increment();
 
         if (key.compareTo(h.key) < 0)  {
             if (!isRed(h.left) && !isRed(h.left.left))
@@ -474,6 +482,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     // the largest key in the subtree rooted at x; null if no such key
     private Node max(Node x) { 
         // assert x != null;
+
+        Counter.increment();
+
         if (x.right == null) return x; 
         else                 return max(x.right); 
     } 
@@ -526,6 +537,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     // the largest key in the subtree rooted at x less than the given key
     private Node lower(Node x, Key key) {
+
+        Counter.increment();
+
         if (x == null) return null;
         int cmp = key.compareTo(x.key);
 //        if (cmp == 0) return x;
@@ -555,7 +569,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     // the smallest key in the subtree rooted at x greater than or equal to the given key
-    private Node ceiling(Node x, Key key) {  
+    private Node ceiling(Node x, Key key) {
+
+        Counter.increment();
+
         if (x == null) return null;
         int cmp = key.compareTo(x.key);
         if (cmp == 0) return x;

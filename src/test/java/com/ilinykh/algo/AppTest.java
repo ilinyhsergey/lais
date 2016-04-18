@@ -4,6 +4,7 @@ package com.ilinykh.algo;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -39,17 +40,13 @@ public class AppTest {
         int bound = 1000;
 
         List<Long> dataTyped;
-        long start, fin, time;
         long[] laIS;
         Random generator = new Random();
         PrintWriter writer;
 
-        long[] lenArr = new long[times];
-        long[] timeArr = new long[times];
-
         try {
             writer = new PrintWriter("result-5000.csv", "UTF-8");
-            writer.println("length(LaIS),Time in nanos");
+            writer.println("LaIS_length,Iteration_count");
 
             for (int j = 0; j < times; ++j) {
 
@@ -57,30 +54,18 @@ public class AppTest {
                 for (int i = 0; i < length; ++i) {
                     dataTyped.add((long) generator.nextInt(bound));
                 }
-                DataProcessor dataProcessor = new DataProcessor(dataTyped, c);
 
-                start = System.nanoTime();
-                laIS = dataProcessor.getLaIS();
-                fin = System.nanoTime();
-                time = fin - start;
-
+                Counter.reset();
+                laIS = new DataProcessor(dataTyped, c).getLaIS();
                 assertTrue(validateLais(laIS, c));
-
-
-                writer.println("" + laIS.length + "," + time);
-
-                lenArr[j] = laIS.length;
-                timeArr[j] = time;
+                writer.println("" + laIS.length + "," + Counter.get());
             }
 
             writer.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
