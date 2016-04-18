@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.TreeMap;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
@@ -24,7 +25,7 @@ public class AppTest {
         for (int i = 0; i < length; ++i) {
             dataTyped.add(data[i]);
         }
-        long[] laIS = new DataProcessor(dataTyped, c).getLaIS();
+        long[] laIS = new App.DataProcessor(dataTyped, c).getLaIS();
         assertArrayEquals(laIS, new long[]{2, 6, 8, 11, 14, 13});
         assertTrue(validateLais(laIS, c));
     }
@@ -38,10 +39,13 @@ public class AppTest {
         int bound = 1000;
 
         List<Long> dataTyped;
-        long start, fin;
+        long start, fin, time;
         long[] laIS;
         Random generator = new Random();
         PrintWriter writer;
+
+        long[] lenArr = new long[times];
+        long[] timeArr = new long[times];
 
         try {
             writer = new PrintWriter("result-5000.csv", "UTF-8");
@@ -53,15 +57,20 @@ public class AppTest {
                 for (int i = 0; i < length; ++i) {
                     dataTyped.add((long) generator.nextInt(bound));
                 }
-                DataProcessor dataProcessor = new DataProcessor(dataTyped, c);
+                App.DataProcessor dataProcessor = new App.DataProcessor(dataTyped, c);
 
                 start = System.nanoTime();
                 laIS = dataProcessor.getLaIS();
                 fin = System.nanoTime();
+                time = fin - start;
 
                 assertTrue(validateLais(laIS, c));
 
-                writer.println("" + laIS.length + "," + (fin - start));
+
+                writer.println("" + laIS.length + "," + time);
+
+                lenArr[j] = laIS.length;
+                timeArr[j] = time;
             }
 
             writer.close();
