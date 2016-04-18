@@ -10,7 +10,6 @@
  *  to be or not to be (2 left on queue)
  *
  ******************************************************************************/
-package com.ilinykh.algo;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

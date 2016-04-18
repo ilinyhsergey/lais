@@ -1,5 +1,3 @@
-package com.ilinykh.algo;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -33,8 +31,6 @@ public class App {
         }
 
 
-        sourceData.forEach(System.out::println);
-
         if (sourceData.isEmpty())
             throw new RuntimeException("SourceData is empty.");
 
@@ -56,7 +52,7 @@ public class App {
             }
 
 
-            StringBuilder builder = new StringBuilder("{ k:" + laIS.length + ", n:" + sourceData.size() + ", cnt:" + Counter.get() + " } ");
+            StringBuilder builder = new StringBuilder();
             for (long element : laIS) {
                 builder.append(element).append(" ");
             }

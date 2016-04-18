@@ -1,5 +1,3 @@
-package com.ilinykh.algo;
-
 import java.util.*;
 
 public class DataProcessor {

@@ -1,5 +1,3 @@
-package com.ilinykh.algo;
-
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Counter {

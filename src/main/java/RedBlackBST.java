@@ -26,7 +26,6 @@
  *  X 7
  *
  ******************************************************************************/
-package com.ilinykh.algo;
 
 import java.util.NoSuchElementException;
 
