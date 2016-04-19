@@ -2,20 +2,31 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
 
         System.out.println("Longest Almost-Increasing Subsequenc.");
 
-        if (args.length < 1 && args[0] != null)
+        if (args.length < 1 || args[0] == null)
             throw new RuntimeException("Unknown data inputFile name");
 
         File inputFile = new File(args[0]);
+        System.out.println("Source file = " + inputFile);
 
+        long c = 2;
+        if (args.length > 1 && args[1] != null)
+            c = Long.parseLong(args[1]);
+        System.out.println("c constant = " + c);
 
-        System.out.println("Source data inputFile: " + inputFile);
+        String outputFilename = "LaIs-result.csv";
+        if (args.length > 2 && args[2] != null)
+            outputFilename = args[2];
+        File outputFile = new File(outputFilename);
+        System.out.println("Result file = " + outputFile);
+
 
         LinkedList<Long> sourceData = new LinkedList<>();
 
@@ -34,28 +45,19 @@ public class App {
         if (sourceData.isEmpty())
             throw new RuntimeException("SourceData is empty.");
 
-        long c;
-        if (args.length > 1 && args[1] != null)
-            c = Long.parseLong(args[1]);
-        else
-            c = 2;
 
         long[] laIS = new DataProcessor(sourceData, c).getLaIS();
 
         PrintWriter writer;
         try {
-            if (args.length > 2 && args[2] != null) {
-                File outputFile = new File(args[2]);
-                writer = new PrintWriter(outputFile, "UTF-8");
-            } else {
-                writer = new PrintWriter("output.csv", "UTF-8");
-            }
+            writer = new PrintWriter(outputFile, "UTF-8");
 
 
             StringBuilder builder = new StringBuilder();
             for (long element : laIS) {
-                builder.append(element).append(" ");
+                builder.append(element).append(",");
             }
+            builder.deleteCharAt(builder.length() - 1);
 
             writer.println(builder.toString());
             writer.close();

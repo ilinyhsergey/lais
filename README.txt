@@ -1,39 +1,42 @@
-Run manually:
+RUN MANUALLY:
+You have to install JDK on your machine
 
 1) Change directory
     "cd LaIS/src/main/java"
 
 2) Compile java files.
-    "find . -name "*.java" | xargs javac"
+    "javac *.java"
 
 3) Run compiled classes.
     Run application to process data.
-    "java App ../resources/data.csv 2 ../resources/out.csv"
+    "java App <source> <C> <result-file>"
     Where:
-        data.csv - source data file (required)
-        2 - constant 'C' in algorithm (optional) default value = 2
-        out.csv - file for writing results (optional) default value = 'output.csv'
+        <source> - (required) Relative path to csv file with source data (for exzmple: src/main/resources/data.csv).
+        <C> - (optional|default=2) The 'C' constant for a LaIS.
+        <result-file> - (optional|default='LaIs-result.csv') Relative path to output file contained LaIS.
 
     Run test application to verify algorithm complexity.
-    "java Test <C> <N> <repeat> <bound>"
+    "java Test <C> <N> <repeat> <bound> <result-file>"
     Where:
-        <C> - The 'C' constant for a LaIS.
-        <N> - A length of each generated source sequence.
-        <repeat> - The number of generated sequences.
-        <bound> - An upper bound of elements in generated source sequences.
+        <C> - (optional|default=2) The 'C' constant for a LaIS.
+        <N> - (optional|default=1000) A length of each generated source sequence.
+        <repeat> - (optional|default=5000)The number of generated sequences.
+        <bound> - (optional|default=1000)An upper bound of elements in generated source sequences.
+        <result-file> - (optional|default='Test-result.csv') Relative path to output file with test results.
 
 
+USING MAVEN:
 If you have Maven installed on your machine you can follow instruction:
 
 1) Change directory
     "cd LaIS/src/main/java"
 
-2) Build runnable jar file. (./target/LaIS-1.0-SNAPSHOT.jar)
+2) Build runnable jar file. (./target/LaIS-1.0.jar)
     "mvn clean package"
 
 2) Run jar file with
-    "java -jar target/LaIS-1.0.jar <source> <C> <result>"
+    "java -jar target/LaIS-1.0.jar <source> <C> <result-file>"
     Where:
-        <source> - Relative path to csv file with source data (src/main/resources/data.csv).
-        <C> - The 'C' constant for a LaIS.
-        <result> - Relative path to output file contained LaIS (result.csv)
+        <source> - (required) Relative path to csv file with source data (for exzmple: src/main/resources/data.csv).
+        <C> - (optional|default=2) The 'C' constant for a LaIS.
+        <result-file> - (optional|default='LaIs-result.csv') Relative path to output file contained LaIS.
